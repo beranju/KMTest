@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nextgen.kmtest.R
 import com.nextgen.kmtest.databinding.FragmentThirdBinding
@@ -53,6 +54,13 @@ class ThirdFragment : Fragment() {
             adapter = userAdapter.withLoadStateFooter(
                 footer = LoadingStateAdapter{ userAdapter.retry() }
             )
+            userAdapter.addLoadStateListener {
+                if (it.refresh == LoadState.Loading){
+                    binding.pbThirdscreen.visibility = View.VISIBLE
+                }else{
+                    binding.pbThirdscreen.visibility = View.GONE
+                }
+            }
         }
     }
 
