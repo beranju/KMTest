@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.paging.LoadState
+import androidx.paging.filter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nextgen.kmtest.R
 import com.nextgen.kmtest.databinding.FragmentThirdBinding
@@ -42,7 +43,12 @@ class ThirdFragment : Fragment() {
         }
 
         viewModel.getUser.observe(viewLifecycleOwner){result->
-            userAdapter.submitData(lifecycle, result)
+            if (result != null){
+                userAdapter.submitData(lifecycle, result)
+                binding.noData.visibility = View.GONE
+            }else{
+                binding.noData.visibility = View.VISIBLE
+            }
         }
 
     }
