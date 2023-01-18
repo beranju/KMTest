@@ -2,10 +2,9 @@ package com.nextgen.kmtest
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.nextgen.kmtest.databinding.ActivityMainBinding
-import com.nextgen.kmtest.ui.FirstFragment
+import com.nextgen.kmtest.ui.firstscreen.FirstFragment
 
 class MainActivity : AppCompatActivity() {
 

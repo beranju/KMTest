@@ -6,4 +6,7 @@
     <string name="btn_next_text">Next</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="isPalindrome">isPalindrome</string>
+    <string name="notPalindrome">not Palindrome</string>
+    <string name="second_fragment_title">Second Screen</string>
 </resources>

@@ -1,16 +1,16 @@
 package com.nextgen.kmtest.ui.thirdscreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nextgen.kmtest.R
 import com.nextgen.kmtest.databinding.FragmentThirdBinding
-import com.nextgen.kmtest.ui.SecondFragment
+import com.nextgen.kmtest.ui.secondscreen.SecondFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -24,12 +24,10 @@ class ThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupToolbar()
+
         userAdapter = UserAdapter()
-        binding.rvItemUser.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            setHasFixedSize(true)
-            adapter = userAdapter
-        }
+        setupRecyclerView()
 
         userAdapter.onClick = {selectedItem->
             val bundle = Bundle()
@@ -37,6 +35,7 @@ class ThirdFragment : Fragment() {
             val secondFragment = SecondFragment()
             secondFragment.arguments = bundle
             parentFragmentManager.commit {
+                addToBackStack(null)
                 replace(R.id.container, secondFragment, SecondFragment::class.java.simpleName)
             }
         }
@@ -45,8 +44,26 @@ class ThirdFragment : Fragment() {
             userAdapter.submitData(lifecycle, result)
         }
 
+    }
 
+    private fun setupRecyclerView() {
+        binding.rvItemUser.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = userAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter{ userAdapter.retry() }
+            )
+        }
+    }
 
+    private fun setupToolbar() {
+        binding.toolbar.apply {
+            setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            setNavigationOnClickListener {
+                parentFragmentManager.popBackStack()
+            }
+            title = "Third Screen"
+        }
     }
 
     override fun onCreateView(

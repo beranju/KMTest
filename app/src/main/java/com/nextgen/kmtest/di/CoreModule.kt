@@ -4,6 +4,7 @@ import android.os.Build
 import com.nextgen.kmtest.BuildConfig
 import com.nextgen.kmtest.data.UserRepository
 import com.nextgen.kmtest.data.remote.ApiService
+import com.nextgen.kmtest.helper.SesiManager
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -32,7 +33,10 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
+    factory {
+        SesiManager(get())
+    }
     single{
-        UserRepository(get())
+        UserRepository(get(), get())
     }
 }
